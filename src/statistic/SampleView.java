@@ -10,12 +10,12 @@ public class SampleView {
     private final SimpleFloatProperty relativeFrequency;
     private final SimpleFloatProperty averageValue;
 
-    SampleView(Sample sample, int baseSampleNumberCount) {
-        this.lowerBound = new SimpleFloatProperty(sample.getMinNumber());
-        this.higherBound = new SimpleFloatProperty(sample.getMaxNumber());
-        this.frequency = new SimpleIntegerProperty(sample.getNumberCount());
-        this.relativeFrequency = new SimpleFloatProperty(sample.getRelativeFrequency(baseSampleNumberCount));
-        this.averageValue = new SimpleFloatProperty(sample.getAverageValue());
+    SampleView(float lowerBound, float higherBound, int frequency, float relativeFrequency, float averageValue) {
+        this.lowerBound = new SimpleFloatProperty(lowerBound);
+        this.higherBound = new SimpleFloatProperty(higherBound);
+        this.frequency = new SimpleIntegerProperty(frequency);
+        this.relativeFrequency = new SimpleFloatProperty(relativeFrequency);
+        this.averageValue = new SimpleFloatProperty(averageValue);
     }
 
     public float getLowerBound() {

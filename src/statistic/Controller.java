@@ -70,7 +70,8 @@ public class Controller {
 
         List<SampleView> samplesViews = new LinkedList<>();
         for (Sample s : samples) {
-            samplesViews.add(new SampleView(s, sample.getNumberCount()));
+            samplesViews.add(new SampleView(s.getMinNumber(), s.getMaxNumber(), s.getNumberCount(),
+                    s.getRelativeFrequency(sample.getNumberCount()), s.getAverageValue()));
         }
 
         this.buildStatTable(samplesViews);
