@@ -3,7 +3,7 @@ package statistic;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-class SampleView {
+public class SampleView {
     private final SimpleFloatProperty lowerBound;
     private final SimpleFloatProperty higherBound;
     private final SimpleIntegerProperty frequency;

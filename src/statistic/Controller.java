@@ -19,9 +19,7 @@ public class Controller {
     public TextArea numbers;
     public TextField samplesNumber;
 
-    public Label xmax;
-    public Label xmin;
-    public Label hop;
+    public Label xmax, xmin, hop;
 
     public TableView<SampleView> statTable;
     public TableColumn dischargeColumn;
@@ -107,9 +105,8 @@ public class Controller {
     private Sample getSample() {
         Sample sample = new Sample();
         String[] data = this.numbers.getText().split(" ");
-        for (int i = 0; i < data.length; i++) {
-            System.out.println(data[i]);
-//            sample.add(Float.parseFloat(number));
+        for (String number : data) {
+            sample.add(Float.parseFloat(number));
         }
         return sample;
     }

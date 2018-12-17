@@ -5,10 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 class Sample {
-    private List<Float> numbers;
+    private List<Float> numbers = new LinkedList<Float>();
 
     Sample() {
-        this.numbers = Collections.emptyList();
     }
 
     void add(Float number) {
@@ -52,14 +51,22 @@ class Sample {
         Float measurementScale = max - min;
         Float hop = measurementScale / partsNumber;
 
-        for (float i = min; i <= max; i += hop) {
+        for (float i = min; i < max; i += hop) {
             Sample sample = new Sample();
             for (Float number : this.numbers) {
-                if (i <= number && number <= i + hop) {
-                    sample.add(number);
+                if (i == min) {
+                    if (i <= number && number <= i + hop) {
+                        sample.add(number);
+                    }
+                } else {
+                    if (i < number && number <= i + hop) {
+                        sample.add(number);
+                    }
                 }
             }
-            parts.add(sample);
+            if (!sample.isEmpty()) {
+                parts.add(sample);
+            }
         }
 
         return parts;

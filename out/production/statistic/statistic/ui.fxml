@@ -3,19 +3,12 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.GridPane?>
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <GridPane alignment="CENTER" hgap="2" vgap="2" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="statistic.Controller">
     <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
         <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
-            <TextField fx:id="samplesNumber" prefColumnCount="25" promptText="Кількість вибірок" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="accuracy" prefColumnCount="25" promptText="Точність (кількість знаків після коми)" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <TextField fx:id="samplesNumber" prefColumnCount="50" promptText="Кількість вибірок" GridPane.columnIndex="0" GridPane.rowIndex="0" />
         </GridPane>
         <TextArea fx:id="numbers" prefColumnCount="50" prefRowCount="3" promptText="Числа" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <Button alignment="CENTER" onAction="#handleCalculateAction" text="Порахувати" GridPane.columnIndex="1" GridPane.rowIndex="0" />
