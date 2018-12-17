@@ -26,11 +26,11 @@ public class Controller {
 
     public TableView<Sample> statTable;
     public TableColumn dischargeColumn;
-    public TableColumn lowColumn;
-    public TableColumn highColumn;
-    public TableColumn miColumn;
-    public TableColumn hiColumn;
-    public TableColumn xiColumn;
+    public TableColumn<Sample, Double> lowColumn;
+    public TableColumn<Sample, Double> highColumn;
+    public TableColumn<Sample, Integer> miColumn;
+    public TableColumn<Sample, Double> hiColumn;
+    public TableColumn<Sample, Double> xiColumn;
 
     public BarChart<String, Float> barChart;
     public CategoryAxis dischargeAxis;
@@ -45,23 +45,90 @@ public class Controller {
 
     @FXML
     public void handleCalculateAction(ActionEvent actionEvent) {
-        try {
-            int samplesNumber = this.getSamplesNumber();
-            int accuracy = this.getAccuracy();
-            List<Float> sampleNumbers = this.getSampleNumbers();
-
-            if (samplesNumber > 0 && !sampleNumbers.isEmpty()) {
-                this.statisticCalculator = new StatisticCalculator(samplesNumber, accuracy, sampleNumbers);
-                List<Sample> samples = this.statisticCalculator.getSamples();
-
-                setSamplingRates();
-
-                buildStatTable(samples);
-                buildBarChart(samples);
-            }
-        } catch (Exception e) {
-            showError("Неочікувана помилка! Відправте це розробнику: " + e.toString());
+        if (!this.samplesNumberExist()) {
+            showError("Кількість вибірок повинна бути цілим числом.");
+            return;
         }
+        if (!this.sampleNumbersExist()) {
+            showError("Числа повинні бути цілими або з плаваючою комою, розділені пробілом.");
+            return;
+        }
+
+        int accuracy;
+        if (!this.accuracyExist()) {
+            showError("Кількість знаків після коми повинна бути цілм числом. "
+                    + "Використовуеться значення за змовчуванням (2 знаки)");
+            accuracy = 2;
+        } else {
+            accuracy = this.getAccuracy();
+        }
+
+        int samplesNumber = this.getSamplesNumber();
+        List<Float> sampleNumbers = this.getSampleNumbers();
+
+        if (samplesNumber <= 0) {
+            showError("Кількість вибірок повинна бути більше 1.");
+            return;
+        }
+        if (sampleNumbers.isEmpty()) {
+            showError("Кількість чисел повинна бути більше 1.");
+            return;
+        }
+
+        this.statisticCalculator = new StatisticCalculator(samplesNumber, accuracy, sampleNumbers);
+        List<Sample> samples = this.statisticCalculator.getSamples();
+
+        this.setSamplingRates();
+
+        this.buildStatTable(samples);
+        this.buildBarChart(samples);
+    }
+
+    private boolean sampleNumbersExist() {
+        try {
+            Integer.parseInt(this.samplesNumber.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean accuracyExist() {
+        try {
+            Integer.parseInt(this.accuracy.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean samplesNumberExist() {
+        try {
+            String[] data = numbers.getText().split(" ");
+            for (String aData : data) {
+                Float.parseFloat(aData);
+            }
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private int getSamplesNumber() {
+        return Integer.parseInt(this.samplesNumber.getText());
+    }
+
+    private int getAccuracy() {
+        return Integer.parseInt(this.accuracy.getText());
+    }
+
+    private List<Float> getSampleNumbers() {
+        List<Float> nums = new ArrayList<>();
+        String[] data = numbers.getText().split(" ");
+        for (String aData : data) {
+            nums.add(Float.parseFloat(aData));
+        }
+        return nums;
     }
 
     private void setSamplingRates() {
@@ -129,58 +196,17 @@ public class Controller {
         }
     }
 
-    private int getSamplesNumber() {
-        int samplesNumber = 0;
-
-        try {
-            samplesNumber = Integer.parseInt(this.samplesNumber.getText());
-        } catch (NumberFormatException e) {
-            showError("Кількість вибірок повинна бути цілим числом.");
-        }
-
-        return samplesNumber;
-    }
-
-    private int getAccuracy() {
-        int accuracy;
-
-        try {
-            accuracy = Integer.parseInt(this.accuracy.getText());
-        } catch (NumberFormatException e) {
-            showError("Кількість знаків після коми повинна бути цілм числом. "
-                    + "Використовуеться значення за змовчуванням (2 знаки)");
-            accuracy = 2;
-        }
-
-        return accuracy;
-    }
-
-    private List<Float> getSampleNumbers() {
-        List<Float> nums = new ArrayList<>();
-
-        try {
-            String data[] = numbers.getText().split(" ");
-            for (String aData : data) {
-                nums.add(Float.parseFloat(aData));
-            }
-        } catch (NumberFormatException e) {
-            showError("Числа повинні бути цілими або з плаваючою комою, розділені пробілом.");
-        }
-
-        return nums;
-    }
-
     private void showWarning(String text) {
-        Alert warningAlert = new Alert(Alert.AlertType.WARNING);
-        warningAlert.setHeaderText(null);
-        warningAlert.setContentText(text);
-        warningAlert.showAndWait();
+        showAlert(new Alert(Alert.AlertType.WARNING), text);
     }
 
     private void showError(String text) {
-        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setHeaderText(null);
-        errorAlert.setContentText(text);
-        errorAlert.showAndWait();
+        showAlert(new Alert(Alert.AlertType.ERROR), text);
+    }
+
+    private void showAlert(Alert alert, String text) {
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.showAndWait();
     }
 }

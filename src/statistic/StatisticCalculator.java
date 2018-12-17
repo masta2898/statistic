@@ -1,6 +1,6 @@
 package statistic;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,9 +48,9 @@ public class StatisticCalculator {
             frequency = sample.getFrequency();
             averageValue = sample.getAverageValue();
             answer += frequency * averageValue;
-            formula.append(String.valueOf(frequency))
+            formula.append(frequency)
                     .append("*")
-                    .append(String.valueOf(averageValue)).append("+");
+                    .append(averageValue).append("+");
         }
 
         answer /= this.numbersCount;
@@ -71,9 +71,9 @@ public class StatisticCalculator {
             relativeFrequency = sample.getRelativeFrequency();
             averageValue = sample.getAverageValue();
             answer += averageValue * relativeFrequency;
-            formula.append(String.valueOf(averageValue))
+            formula.append(averageValue)
                     .append("*")
-                    .append(String.valueOf(relativeFrequency)).append("+");
+                    .append(relativeFrequency).append("+");
         }
 
         formula.deleteCharAt(formula.length() - 1);
@@ -84,11 +84,11 @@ public class StatisticCalculator {
 
     // Оценка дисперсии.
     public Solution calculateVarianceEstimation(float mathExpectationEstimation) {
-        StringBuilder formula = new StringBuilder("");
+        StringBuilder formula = new StringBuilder();
         Float answer = 0F;
 
         int samplesNumber = this.samples.size();
-        formula.append(String.valueOf(samplesNumber)).append("/").append(samplesNumber-1).append("*(");
+        formula.append(samplesNumber).append("/").append(samplesNumber - 1).append("*(");
 
         float averageValue, relativeFrequency;
         for (Sample sample : this.samples) {
@@ -96,11 +96,11 @@ public class StatisticCalculator {
             averageValue = sample.getAverageValue();
             answer += (float) Math.pow(averageValue - mathExpectationEstimation, 2) * relativeFrequency;
             formula.append("(")
-                    .append(String.valueOf(averageValue))
+                    .append(averageValue)
                     .append("-")
-                    .append(String.valueOf(mathExpectationEstimation))
+                    .append(mathExpectationEstimation)
                     .append(")^2")
-                    .append("*").append(String.valueOf(relativeFrequency)).append("+");
+                    .append("*").append(relativeFrequency).append("+");
         }
 
         float offset = (float) samplesNumber / ((float) samplesNumber - 1);
@@ -114,9 +114,9 @@ public class StatisticCalculator {
 
     // Оценка среднеквадратического отклонения.
     public Solution calculateQuadraticDeviationEstimation(float varianceEstimation) {
-        StringBuilder formula = new StringBuilder("");
+        StringBuilder formula = new StringBuilder();
         Float answer = (float) Math.sqrt(varianceEstimation);
-        formula.append("sqrt(").append(String.valueOf(varianceEstimation)).append(")");
+        formula.append("sqrt(").append(varianceEstimation).append(")");
         return new Solution(formula.toString(), answer);
     }
 
