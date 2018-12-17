@@ -10,27 +10,26 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class Controller {
     @FXML
     public TextArea numbers;
-    public TextField accuracy;
     public TextField samplesNumber;
 
     public Label xmax;
     public Label xmin;
     public Label hop;
 
-    public TableView<Sample> statTable;
+    public TableView<SampleView> statTable;
     public TableColumn dischargeColumn;
-    public TableColumn<Sample, Double> lowColumn;
-    public TableColumn<Sample, Double> highColumn;
-    public TableColumn<Sample, Integer> miColumn;
-    public TableColumn<Sample, Double> hiColumn;
-    public TableColumn<Sample, Double> xiColumn;
+    public TableColumn<SampleView, Double> lowColumn;
+    public TableColumn<SampleView, Double> highColumn;
+    public TableColumn<SampleView, Integer> miColumn;
+    public TableColumn<SampleView, Double> hiColumn;
+    public TableColumn<SampleView, Double> xiColumn;
 
     public BarChart<String, Float> barChart;
     public CategoryAxis dischargeAxis;
@@ -41,61 +40,48 @@ public class Controller {
     public TextField varianceEstimation;
     public TextField quadraticDeviationEstimation;
 
-    private StatisticCalculator statisticCalculator;
-
     @FXML
     public void handleCalculateAction(ActionEvent actionEvent) {
         if (!this.samplesNumberExist()) {
             showError("Кількість вибірок повинна бути цілим числом.");
             return;
         }
+
         if (!this.sampleNumbersExist()) {
             showError("Числа повинні бути цілими або з плаваючою комою, розділені пробілом.");
             return;
         }
 
-        int accuracy;
-        if (!this.accuracyExist()) {
-            showError("Кількість знаків після коми повинна бути цілм числом. "
-                    + "Використовуеться значення за змовчуванням (2 знаки)");
-            accuracy = 2;
-        } else {
-            accuracy = this.getAccuracy();
-        }
-
         int samplesNumber = this.getSamplesNumber();
-        List<Float> sampleNumbers = this.getSampleNumbers();
+        Sample sample = this.getSample();
 
         if (samplesNumber <= 0) {
             showError("Кількість вибірок повинна бути більше 1.");
             return;
         }
-        if (sampleNumbers.isEmpty()) {
+
+        if (sample.isEmpty()) {
             showError("Кількість чисел повинна бути більше 1.");
             return;
         }
 
-        this.statisticCalculator = new StatisticCalculator(samplesNumber, accuracy, sampleNumbers);
-        List<Sample> samples = this.statisticCalculator.getSamples();
+        StatisticCalculator statisticCalculator = new StatisticCalculator(samplesNumber, sample);
+        List<Sample> samples = statisticCalculator.getSamples();
 
-        this.setSamplingRates();
+        this.setSamplingRates(statisticCalculator.getSamplingRates());
 
-        this.buildStatTable(samples);
+        List<SampleView> samplesViews = new LinkedList<>();
+        for (Sample s : samples) {
+            samplesViews.add(new SampleView(s, sample.getNumberCount()));
+        }
+
+        this.buildStatTable(samplesViews);
         this.buildBarChart(samples);
     }
 
     private boolean sampleNumbersExist() {
         try {
             Integer.parseInt(this.samplesNumber.getText());
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    private boolean accuracyExist() {
-        try {
-            Integer.parseInt(this.accuracy.getText());
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -118,51 +104,39 @@ public class Controller {
         return Integer.parseInt(this.samplesNumber.getText());
     }
 
-    private int getAccuracy() {
-        return Integer.parseInt(this.accuracy.getText());
-    }
-
-    private List<Float> getSampleNumbers() {
-        List<Float> nums = new ArrayList<>();
-        String[] data = numbers.getText().split(" ");
-        for (String aData : data) {
-            nums.add(Float.parseFloat(aData));
+    private Sample getSample() {
+        Sample sample = new Sample();
+        String[] data = this.numbers.getText().split(" ");
+        for (int i = 0; i < data.length; i++) {
+            System.out.println(data[i]);
+//            sample.add(Float.parseFloat(number));
         }
-        return nums;
+        return sample;
     }
 
-    private void setSamplingRates() {
-        this.xmax.setText(String.valueOf(this.statisticCalculator.getMax()));
-        this.xmin.setText(String.valueOf(this.statisticCalculator.getMin()));
-        this.hop.setText(String.valueOf(this.statisticCalculator.getHop()));
+    private void setSamplingRates(SamplingRates samplingRates) {
+        this.xmax.setText(String.valueOf(samplingRates.getMax()));
+        this.xmin.setText(String.valueOf(samplingRates.getMin()));
+        this.hop.setText(String.valueOf(samplingRates.getHop()));
 
-        Solution sampleMean = this.statisticCalculator.calculateSampleMean();
-        Solution mathExpectationEstimation = this.statisticCalculator.calculateMathExpectationEstimation();
-        Solution varianceEstimation = this.statisticCalculator.calculateVarianceEstimation(
-                mathExpectationEstimation.getAnswer());
-        Solution quadraticDeviationEstimation = this.statisticCalculator.calculateQuadraticDeviationEstimation(
-                varianceEstimation.getAnswer());
-
-        this.sampleMean.setText(sampleMean.getFormula() + "=" + sampleMean.getAnswer().toString());
-        this.mathExpectationEstimation.setText(mathExpectationEstimation.getFormula() + "="
-                + mathExpectationEstimation.getAnswer().toString());
-        this.varianceEstimation.setText(varianceEstimation.getFormula() + "=" + varianceEstimation.getAnswer());
-        this.quadraticDeviationEstimation.setText(quadraticDeviationEstimation.getFormula() + "="
-                + quadraticDeviationEstimation.getAnswer());
+        this.sampleMean.setText(samplingRates.getSampleMeanRate());
+        this.mathExpectationEstimation.setText(samplingRates.getMathExpectationEstimationRate());
+        this.varianceEstimation.setText(samplingRates.getVarianceEstimationRate());
+        this.quadraticDeviationEstimation.setText(samplingRates.getQuadraticDeviationEstimationRate());
     }
 
-    private void buildStatTable(List<Sample> samples) {
+    private void buildStatTable(List<SampleView> sampleViews) {
         try {
             this.dischargeColumn.getColumns().clear();
             this.statTable.getColumns().clear();
 
-            this.lowColumn.setCellValueFactory(new PropertyValueFactory<Sample, Double>("lowerBound"));
-            this.highColumn.setCellValueFactory(new PropertyValueFactory<Sample, Double>("higherBound"));
-            this.miColumn.setCellValueFactory(new PropertyValueFactory<Sample, Integer>("frequency"));
-            this.hiColumn.setCellValueFactory(new PropertyValueFactory<Sample, Double>("relativeFrequency"));
-            this.xiColumn.setCellValueFactory(new PropertyValueFactory<Sample, Double>("averageValue"));
+            this.lowColumn.setCellValueFactory(new PropertyValueFactory<>("lowerBound"));
+            this.highColumn.setCellValueFactory(new PropertyValueFactory<>("higherBound"));
+            this.miColumn.setCellValueFactory(new PropertyValueFactory<>("frequency"));
+            this.hiColumn.setCellValueFactory(new PropertyValueFactory<>("relativeFrequency"));
+            this.xiColumn.setCellValueFactory(new PropertyValueFactory<>("averageValue"));
 
-            this.statTable.setItems(FXCollections.observableArrayList(samples));
+            this.statTable.setItems(FXCollections.observableArrayList(sampleViews));
 
             this.dischargeColumn.getColumns().addAll(this.lowColumn, this.highColumn);
             this.statTable.getColumns().addAll(this.dischargeColumn, this.miColumn, this.hiColumn, this.xiColumn);
@@ -182,18 +156,19 @@ public class Controller {
         XYChart.Series series = new XYChart.Series();
         series.setName("Значення відносної частоти у проміжку.");
 
-        try {
-            String discharge;
-            for (Sample sample : samples) {
-                discharge = sample.getLowerBound().toString() + "-" + sample.getHigherBound().toString();
-                series.getData().add(new XYChart.Data(discharge, sample.getRelativeFrequency()));
-            }
-
-            this.barChart.getData().clear();
-            this.barChart.getData().addAll(series);
-        } catch (Exception e) {
-            showError("Результати не можуть бути відображені на гістограмі через помилку:" + e.toString());
+        int baseSampleNumberCount = 0;
+        for (Sample sample : samples) {
+            baseSampleNumberCount += sample.getNumberCount();
         }
+
+        String discharge;
+        for (Sample sample : samples) {
+            discharge = "з " + sample.getMinNumber().toString() + " до " + sample.getMaxNumber().toString();
+            series.getData().add(new XYChart.Data(discharge, sample.getRelativeFrequency(baseSampleNumberCount)));
+        }
+
+        this.barChart.getData().clear();
+        this.barChart.getData().addAll(series);
     }
 
     private void showWarning(String text) {

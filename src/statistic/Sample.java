@@ -1,60 +1,67 @@
 package statistic;
 
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Sample {
-    private final SimpleFloatProperty lowerBound;
-    private final SimpleFloatProperty higherBound;
-    private final SimpleIntegerProperty frequency;
-    private final SimpleFloatProperty relativeFrequency;
-    private final SimpleFloatProperty averageValue;
+class Sample {
+    private List<Float> numbers;
 
-    public Sample(Float lowerBound, Float higherBound, Integer frequency, Float relativeFrequency, Float averageValue) {
-        this.lowerBound = new SimpleFloatProperty(lowerBound);
-        this.higherBound = new SimpleFloatProperty(higherBound);
-        this.frequency = new SimpleIntegerProperty(frequency);
-        this.relativeFrequency = new SimpleFloatProperty(relativeFrequency);
-        this.averageValue = new SimpleFloatProperty(averageValue);
+    Sample() {
+        this.numbers = Collections.emptyList();
     }
 
-    public Float getLowerBound() {
-        return lowerBound.get();
+    void add(Float number) {
+        this.numbers.add(number);
     }
 
-    public void setLowerBound(Float lowerBound) {
-        this.lowerBound.set(lowerBound);
+    boolean isEmpty() {
+        return this.numbers.isEmpty();
     }
 
-    public Float getHigherBound() {
-        return higherBound.get();
+    Float getMaxNumber() {
+        return Collections.max(this.numbers);
     }
 
-    public void setHigherBound(Float higherBound) {
-        this.higherBound.set(higherBound);
+    Float getMinNumber() {
+        return Collections.min(this.numbers);
     }
 
-    public int getFrequency() {
-        return frequency.get();
+    Integer getNumberCount() {
+        return this.numbers.size();
     }
 
-    public void setFrequency(Integer frequency) {
-        this.frequency.set(frequency);
+    Float getRelativeFrequency(int baseSampleNumberCount) {
+        return (float) this.getNumberCount() / (float) baseSampleNumberCount;
     }
 
-    public Float getRelativeFrequency() {
-        return relativeFrequency.get();
+    Float getAverageValue() {
+        Float averageValue = 0F;
+        for (Float number : this.numbers) {
+            averageValue += number;
+        }
+        return averageValue / this.getNumberCount();
     }
 
-    public void setRelativeFrequency(Float relativeFrequency) {
-        this.relativeFrequency.set(relativeFrequency);
-    }
+    List<Sample> divideToParts(int partsNumber) {
+        Collections.sort(this.numbers);
 
-    public Float getAverageValue() {
-        return averageValue.get();
-    }
+        List<Sample> parts = new LinkedList<>();
+        Float max = this.getMaxNumber();
+        Float min = this.getMinNumber();
+        Float measurementScale = max - min;
+        Float hop = measurementScale / partsNumber;
 
-    public void setAverageValue(Float averageValue) {
-        this.averageValue.set(averageValue);
+        for (float i = min; i <= max; i += hop) {
+            Sample sample = new Sample();
+            for (Float number : this.numbers) {
+                if (i <= number && number <= i + hop) {
+                    sample.add(number);
+                }
+            }
+            parts.add(sample);
+        }
+
+        return parts;
     }
 }

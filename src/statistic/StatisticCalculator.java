@@ -1,74 +1,68 @@
 package statistic;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class StatisticCalculator {
-    private int numbersCount;
+class StatisticCalculator {
+    private final Float sampleMaxNumber, sampleMinNumber, sampleHopNumber;
+
+    private final Integer baseSampleNumberCount;
+
     private final List<Sample> samples;
-    private float min, max;
-    private float hop;
-    private int accuracy;
 
-    StatisticCalculator(int samplesNumber, int accuracy, @NotNull List<Float> numbers) {
-        this.accuracy = accuracy;
-        this.numbersCount = numbers.size();
-        this.min = Collections.min(numbers);
-        this.max = Collections.max(numbers);
-        this.hop = this.round((this.max - this.min) / samplesNumber);
-        this.samples = this.generateSamples(numbers);
+    StatisticCalculator(int samplesNumber, Sample sample) {
+        this.sampleMaxNumber = sample.getMaxNumber();
+        this.sampleMinNumber = sample.getMinNumber();
+        this.sampleHopNumber = (this.sampleMaxNumber - this.sampleMinNumber) / samplesNumber;
+
+        this.baseSampleNumberCount = sample.getNumberCount();
+
+        this.samples = sample.divideToParts(samplesNumber);
     }
 
-    public float getMin() {
-        return this.min;
-    }
-
-    public float getMax() {
-        return this.max;
-    }
-
-    public float getHop() {
-        return this.hop;
-    }
-
-    public List<Sample> getSamples() {
+    List<Sample> getSamples() {
         return this.samples;
     }
 
+    SamplingRates getSamplingRates() {
+        Solution mathExpectationEstimation = this.calculateMathExpectationEstimation();
+        Solution varianceEstimation = this.calculateVarianceEstimation(mathExpectationEstimation.getAnswer());
+        return new SamplingRates(this.sampleMaxNumber, this.sampleMinNumber, this.sampleHopNumber,
+                this.calculateSampleMean(), mathExpectationEstimation,
+                varianceEstimation, this.calculateQuadraticDeviationEstimation(varianceEstimation.getAnswer()));
+    }
+
     // Средняя выборки.
-    public Solution calculateSampleMean() {
+    private Solution calculateSampleMean() {
         StringBuilder formula = new StringBuilder("(");
         Float answer = 0F;
 
-        int frequency; float averageValue;
+        int numberCount;
+        float averageValue;
         for (Sample sample : this.samples) {
-            frequency = sample.getFrequency();
+            numberCount = sample.getNumberCount();
             averageValue = sample.getAverageValue();
-            answer += frequency * averageValue;
-            formula.append(frequency)
+            answer += numberCount * averageValue;
+            formula.append(numberCount)
                     .append("*")
                     .append(averageValue).append("+");
         }
 
-        answer /= this.numbersCount;
+        answer /= this.baseSampleNumberCount;
 
         formula.deleteCharAt(formula.length() - 1);
-        formula.append(")").append("/").append(this.numbersCount);
+        formula.append(")").append("/").append(this.baseSampleNumberCount);
 
         return new Solution(formula.toString(), answer);
     }
 
     // Оценка математического ожидания.
-    public Solution calculateMathExpectationEstimation() {
+    private Solution calculateMathExpectationEstimation() {
         StringBuilder formula = new StringBuilder("(");
         Float answer = 0F;
 
         float relativeFrequency, averageValue;
         for (Sample sample : this.samples) {
-            relativeFrequency = sample.getRelativeFrequency();
+            relativeFrequency = sample.getRelativeFrequency(this.baseSampleNumberCount);
             averageValue = sample.getAverageValue();
             answer += averageValue * relativeFrequency;
             formula.append(averageValue)
@@ -83,7 +77,7 @@ public class StatisticCalculator {
     }
 
     // Оценка дисперсии.
-    public Solution calculateVarianceEstimation(float mathExpectationEstimation) {
+    private Solution calculateVarianceEstimation(float mathExpectationEstimation) {
         StringBuilder formula = new StringBuilder();
         Float answer = 0F;
 
@@ -92,7 +86,7 @@ public class StatisticCalculator {
 
         float averageValue, relativeFrequency;
         for (Sample sample : this.samples) {
-            relativeFrequency = sample.getRelativeFrequency();
+            relativeFrequency = sample.getRelativeFrequency(this.baseSampleNumberCount);
             averageValue = sample.getAverageValue();
             answer += (float) Math.pow(averageValue - mathExpectationEstimation, 2) * relativeFrequency;
             formula.append("(")
@@ -113,50 +107,10 @@ public class StatisticCalculator {
     }
 
     // Оценка среднеквадратического отклонения.
-    public Solution calculateQuadraticDeviationEstimation(float varianceEstimation) {
+    private Solution calculateQuadraticDeviationEstimation(float varianceEstimation) {
         StringBuilder formula = new StringBuilder();
         Float answer = (float) Math.sqrt(varianceEstimation);
         formula.append("sqrt(").append(varianceEstimation).append(")");
         return new Solution(formula.toString(), answer);
-    }
-
-    private List<Sample> generateSamples(List<Float> numbers) {
-        int frequency;
-        float nextBound;
-        List<Sample> samples = new ArrayList<>();
-
-        for (float i = this.min; i < this.max; i += this.hop) {
-            i = this.round(i); // don't try to understand why does it needed here.
-            nextBound = this.round(i + this.hop);
-            frequency = this.getFrequency(i, nextBound, numbers);
-            samples.add(new Sample(
-                    i, nextBound,
-                    frequency,
-                    this.round((float) frequency / (float) numbers.size()),
-                    this.round((i + nextBound) / 2)));
-        }
-
-        return samples;
-    }
-
-    private int getFrequency(float from, float to, List<Float> numbers) {
-        int result = 0;
-        for (float number : numbers) {
-            if (from == this.min) {
-                if (from <= number && number <= to) {
-                    result++;
-                }
-            } else {
-                if (from < number && number <= to) {
-                    result++;
-                }
-            }
-        }
-        return result;
-    }
-
-    private float round(float number) {
-        float coefficient = (float) Math.pow(10, this.accuracy);
-        return Math.round(number * coefficient) / coefficient;
     }
 }
