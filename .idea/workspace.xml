@@ -7,9 +7,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fb43cd3a-8e09-4620-994f-a6cae609c36b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/statistic/SampleParameters.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/statistic/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/statistic/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/statistic/Sample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/statistic/Sample.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/statistic/SampleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/statistic/SampleView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/statistic/SamplingRates.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/statistic/Solution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/statistic/Solution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/statistic/StatisticCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/statistic/SampleParametersCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistic.iml" beforeDir="false" afterPath="$PROJECT_DIR$/statistic.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,44 +25,35 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/statistic/StatisticCalculator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/statistic/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="58" column="9" lean-forward="true" selection-start-line="58" selection-start-column="9" selection-end-line="58" selection-end-column="9" />
+            <state relative-caret-position="184">
+              <caret line="66" column="64" lean-forward="true" selection-start-line="66" selection-start-column="64" selection-end-line="66" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3076#3077#0" expanded="true" />
-                <element signature="e#3145#3146#0" expanded="true" />
-                <element signature="e#6186#6187#0" expanded="true" />
-                <element signature="e#6253#6254#0" expanded="true" />
-                <element signature="e#6296#6297#0" expanded="true" />
-                <element signature="e#6361#6362#0" expanded="true" />
+                <element signature="e#3373#3374#0" expanded="true" />
+                <element signature="e#3442#3443#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/statistic/SampleView.java">
+        <entry file="file://$PROJECT_DIR$/src/statistic/SampleParametersCalculator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
-              <caret line="9" column="56" lean-forward="true" selection-start-line="9" selection-start-column="56" selection-end-line="9" selection-end-column="56" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#925#926#0" expanded="true" />
-                <element signature="e#964#965#0" expanded="true" />
-              </folding>
+              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/statistic/SampleParameters.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
             </state>
           </provider>
         </entry>
@@ -64,12 +61,28 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/statistic/Sample.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="56" column="31" selection-start-line="56" selection-start-column="31" selection-end-line="56" selection-end-column="31" />
+            <state relative-caret-position="165">
+              <caret line="11" column="5" lean-forward="true" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#445#446#0" expanded="true" />
-                <element signature="e#497#498#0" expanded="true" />
+                <element signature="e#184#185#0" expanded="true" />
+                <element signature="e#222#223#0" expanded="true" />
+                <element signature="e#524#525#0" expanded="true" />
+                <element signature="e#596#597#0" expanded="true" />
+                <element signature="e#1968#1969#0" expanded="true" />
+                <element signature="e#2008#2009#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/statistic/SampleView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="25" lean-forward="true" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,6 +94,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
+        <option value="Salt Wireframe" />
+        <option value="UML Activity" />
         <option value="Class" />
       </list>
     </option>
@@ -105,27 +120,53 @@
       <list>
         <option value="$PROJECT_DIR$/src/statistic/StatisticCalculatorTest.java" />
         <option value="$PROJECT_DIR$/src/statistic/SampleSolution.java" />
-        <option value="$PROJECT_DIR$/src/statistic/SamplingRates.java" />
-        <option value="$PROJECT_DIR$/src/statistic/StatisticCalculator.java" />
-        <option value="$PROJECT_DIR$/src/statistic/Sample.java" />
         <option value="$PROJECT_DIR$/src/statistic/ui.fxml" />
+        <option value="$PROJECT_DIR$/src/statistic/Solution.java" />
+        <option value="$PROJECT_DIR$/src/statistic/SamplingRates.java" />
+        <option value="$PROJECT_DIR$/src/statistic/SampleObjectAdapter.java" />
         <option value="$PROJECT_DIR$/src/statistic/SampleView.java" />
+        <option value="$PROJECT_DIR$/src/statistic/SampleViewAdapter.java" />
+        <option value="$PROJECT_DIR$/src/statistic/Sample.java" />
+        <option value="$PROJECT_DIR$/src/statistic/StatisticCalculator.java" />
+        <option value="$PROJECT_DIR$/src/statistic/SamplingParameters.java" />
+        <option value="$PROJECT_DIR$/src/statistic/SampleCalculator.java" />
         <option value="$PROJECT_DIR$/src/statistic/Controller.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="226" />
-    <option name="y" value="372" />
-    <option name="width" value="1380" />
-    <option name="height" value="795" />
+    <option name="y" value="25" />
+    <option name="width" value="1920" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scope">
+        <subPane subId="Scope 'Production'; set:Production; class com.intellij.psi.search.scope.ProjectProductionScope">
+          <expand>
+            <path>
+              <item name="statistic" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="statistic" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+            </path>
+            <path>
+              <item name="statistic" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="statistic" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="statistic" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="statistic" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="statistic" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -148,7 +189,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -160,14 +200,16 @@
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545073099777" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545147995948" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="create.test.in.the.same.root" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/artifacts/statistic_jar/statistic.jar" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="last_opened_file_path" value="$USER_HOME$/tools/java_lib_jars/javafx-sdk-11.0.1/lib" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -253,7 +295,14 @@
       <option name="project" value="LOCAL" />
       <updated>1545071550251</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Creator pattern">
+      <created>1545073181921</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1545073181921</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -268,7 +317,7 @@
     <frame x="0" y="25" width="1920" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26040554" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14781217" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -286,14 +335,15 @@
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50053364" side_tool="true" weight="0.399137" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.16720603" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Capture Analysis" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="PlantUML" order="0" weight="0.32977587" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Maven" order="5" />
+      <window_info anchor="right" id="Theme Preview" order="6" />
+      <window_info anchor="right" id="Capture Analysis" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
@@ -301,91 +351,18 @@
     <MESSAGE value="refactoring" />
     <MESSAGE value="refactoring [with bugs]" />
     <MESSAGE value="refactoring [with fixed bugs]" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring [with fixed bugs]" />
+    <MESSAGE value="Creator pattern" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creator pattern" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/statistic/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/statistic/StatisticCalculatorTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/statistic/SamplingRates.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="25" column="24" lean-forward="true" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
-          <folding>
-            <element signature="e#932#933#0" expanded="true" />
-            <element signature="e#958#959#0" expanded="true" />
-            <element signature="e#877#878#0" expanded="true" />
-            <element signature="e#903#904#0" expanded="true" />
-            <element signature="e#987#988#0" expanded="true" />
-            <element signature="e#1013#1014#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/statistic/Solution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/javafx-sdk-11.0.1/lib/javafx.controls.jar!/javafx/scene/control/cell/PropertyValueFactory.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="23" column="11" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-          <folding>
-            <element signature="e#874#875#0" expanded="true" />
-            <element signature="e#910#911#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/javafx-sdk-11.0.1/lib/javafx.controls.jar!/javafx/scene/control/TableColumn.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4455">
-          <caret line="328" column="45" selection-start-line="328" selection-start-column="38" selection-end-line="328" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/javafx-sdk-11.0.1/lib/javafx.controls.jar!/javafx/scene/control/TextInputControl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="1153" selection-start-line="1153" selection-end-line="1153" />
-          <folding>
-            <element signature="e#9555#9556#0" expanded="true" />
-            <element signature="e#9593#9594#0" expanded="true" />
-            <element signature="e#37358#37359#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/javafx-sdk-11.0.1/lib/javafx.controls.jar!/javafx/scene/control/TextArea.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="343" column="22" selection-start-line="343" selection-start-column="22" selection-end-line="343" selection-end-column="22" />
-          <folding>
-            <element signature="e#17829#17830#0" expanded="true" />
-            <element signature="e#17878#17879#0" expanded="true" />
-            <element signature="e#17909#17910#0" expanded="true" />
-            <element signature="e#17966#17967#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://$USER_HOME$/Downloads/javafx-sdk-11.0.1/lib/javafx.controls.jar!/javafx/scene/control/cell/PropertyValueFactory.class" />
+    <entry file="jar://$USER_HOME$/Downloads/javafx-sdk-11.0.1/lib/javafx.controls.jar!/javafx/scene/control/TableColumn.class" />
+    <entry file="jar://$USER_HOME$/Downloads/javafx-sdk-11.0.1/lib/javafx.controls.jar!/javafx/scene/control/TextInputControl.class" />
+    <entry file="jar://$USER_HOME$/Downloads/javafx-sdk-11.0.1/lib/javafx.controls.jar!/javafx/scene/control/TextArea.class" />
     <entry file="jrt:///usr/lib/jvm/java-1.11.0-openjdk-amd64!/java.base/java/util/List.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -424,13 +401,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/Downloads/javafx-sdk-11.0.1/lib/javafx.fxml.jar!/javafx/fxml/FXMLLoader.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="1203" selection-start-line="1203" selection-end-line="1203" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://$USER_HOME$/Downloads/javafx-sdk-11.0.1/lib/javafx.fxml.jar!/javafx/fxml/FXMLLoader.class" />
     <entry file="file://$PROJECT_DIR$/src/statistic/ui.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -439,50 +410,84 @@
       </provider>
       <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/statistic/StatisticCalculator.java">
+    <entry file="file://$PROJECT_DIR$/src/statistic/test.puml" />
+    <entry file="file://$PROJECT_DIR$/src/statistic/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/statistic/Sample.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="56" column="31" selection-start-line="56" selection-start-column="31" selection-end-line="56" selection-end-column="31" />
+        <state relative-caret-position="135">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#445#446#0" expanded="true" />
-            <element signature="e#497#498#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/statistic/Controller.java">
+    <entry file="file://$PROJECT_DIR$/src/statistic/SampleViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="58" column="9" lean-forward="true" selection-start-line="58" selection-start-column="9" selection-end-line="58" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3076#3077#0" expanded="true" />
-            <element signature="e#3145#3146#0" expanded="true" />
-            <element signature="e#6186#6187#0" expanded="true" />
-            <element signature="e#6253#6254#0" expanded="true" />
-            <element signature="e#6296#6297#0" expanded="true" />
-            <element signature="e#6361#6362#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="75">
+          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/statistic/SampleView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="56" lean-forward="true" selection-start-line="9" selection-start-column="56" selection-end-line="9" selection-end-column="56" />
+        <state relative-caret-position="75">
+          <caret line="5" column="25" lean-forward="true" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#925#926#0" expanded="true" />
-            <element signature="e#964#965#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/statistic/Solution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="31" lean-forward="true" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
+          <folding>
+            <element signature="e#374#375#0" expanded="true" />
+            <element signature="e#403#404#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/statistic/Sample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="5" lean-forward="true" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#184#185#0" expanded="true" />
+            <element signature="e#222#223#0" expanded="true" />
+            <element signature="e#524#525#0" expanded="true" />
+            <element signature="e#596#597#0" expanded="true" />
+            <element signature="e#1968#1969#0" expanded="true" />
+            <element signature="e#2008#2009#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/statistic/SampleParameters.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/statistic/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="66" column="64" lean-forward="true" selection-start-line="66" selection-start-column="64" selection-end-line="66" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3373#3374#0" expanded="true" />
+            <element signature="e#3442#3443#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/statistic/SampleParametersCalculator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>

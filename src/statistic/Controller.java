@@ -51,7 +51,7 @@ public class Controller {
         }
 
         int samplesNumber = this.getSamplesNumber();
-        Sample sample = this.getSample();
+        Sample sample = new Sample(this.getSampleNumbers());
 
         if (samplesNumber <= 0) {
             showError("Кількість вибірок повинна бути більше 1.");
@@ -63,19 +63,29 @@ public class Controller {
             return;
         }
 
-        StatisticCalculator statisticCalculator = new StatisticCalculator(samplesNumber, sample);
-        List<Sample> samples = statisticCalculator.getSamples();
+        List<Sample> samples = sample.divideToParts(samplesNumber);
+        List<SampleView> sampleViews = this.getSampleViews(sample, samples);
 
-        this.setSamplingRates(statisticCalculator.getSamplingRates());
+        SampleParametersCalculator sampleParametersCalculator = new SampleParametersCalculator(sample, samplesNumber);
+        SampleParameters sampleParameters = sampleParametersCalculator.calculateSampleParameters();
 
-        List<SampleView> samplesViews = new LinkedList<>();
-        for (Sample s : samples) {
-            samplesViews.add(new SampleView(s.getMinNumber(), s.getMaxNumber(), s.getNumberCount(),
-                    s.getRelativeFrequency(sample.getNumberCount()), s.getAverageValue()));
-        }
-
-        this.buildStatTable(samplesViews);
+        this.setSampleParameters(sampleParameters);
+        this.buildStatTable(sampleViews);
         this.buildBarChart(samples);
+    }
+
+    private List<SampleView> getSampleViews(Sample baseSample, List<Sample> samples) {
+        List<SampleView> sampleViews = new LinkedList<>();
+        for (Sample sample : samples) {
+            SampleView sampleView = new SampleView();
+            sampleView.setHigherBound(sample.getMaxNumber());
+            sampleView.setLowerBound(sample.getMinNumber());
+            sampleView.setFrequency(sample.getNumberCount());
+            sampleView.setRelativeFrequency(sample.getRelativeFrequency(baseSample.getNumberCount()));
+            sampleView.setAverageValue(sample.getAverageValue());
+            sampleViews.add(sampleView);
+        }
+        return sampleViews;
     }
 
     private boolean sampleNumbersExist() {
@@ -103,24 +113,24 @@ public class Controller {
         return Integer.parseInt(this.samplesNumber.getText());
     }
 
-    private Sample getSample() {
-        Sample sample = new Sample();
+    private List<Float> getSampleNumbers() {
+        List<Float> sampleNumbers = new LinkedList<>();
         String[] data = this.numbers.getText().split(" ");
         for (String number : data) {
-            sample.add(Float.parseFloat(number));
+            sampleNumbers.add(Float.parseFloat(number));
         }
-        return sample;
+        return sampleNumbers;
     }
 
-    private void setSamplingRates(SamplingRates samplingRates) {
-        this.xmax.setText(String.valueOf(samplingRates.getMax()));
-        this.xmin.setText(String.valueOf(samplingRates.getMin()));
-        this.hop.setText(String.valueOf(samplingRates.getHop()));
+    private void setSampleParameters(SampleParameters sampleParameters) {
+        this.xmax.setText(String.valueOf(sampleParameters.getMax()));
+        this.xmin.setText(String.valueOf(sampleParameters.getMin()));
+        this.hop.setText(String.valueOf(sampleParameters.getHop()));
 
-        this.sampleMean.setText(samplingRates.getSampleMeanRate());
-        this.mathExpectationEstimation.setText(samplingRates.getMathExpectationEstimationRate());
-        this.varianceEstimation.setText(samplingRates.getVarianceEstimationRate());
-        this.quadraticDeviationEstimation.setText(samplingRates.getQuadraticDeviationEstimationRate());
+        this.sampleMean.setText(sampleParameters.getSampleMeanCalculation());
+        this.mathExpectationEstimation.setText(sampleParameters.getMathExpectationEstimationCalculation());
+        this.varianceEstimation.setText(sampleParameters.getVarianceEstimationCalculation());
+        this.quadraticDeviationEstimation.setText(sampleParameters.getQuadraticDeviationEstimationCalculation());
     }
 
     private void buildStatTable(List<SampleView> sampleViews) {

@@ -2,39 +2,43 @@ package statistic;
 
 import java.util.List;
 
-class StatisticCalculator {
-    private final Float sampleMaxNumber, sampleMinNumber, sampleHopNumber;
+class SampleParametersCalculator {
 
-    private final Integer baseSampleNumberCount;
-
+    private final Sample sample;
     private final List<Sample> samples;
+    private final int baseSampleNumberCount;
 
-    StatisticCalculator(int samplesNumber, Sample sample) {
-        this.sampleMaxNumber = sample.getMaxNumber();
-        this.sampleMinNumber = sample.getMinNumber();
-        this.sampleHopNumber = (this.sampleMaxNumber - this.sampleMinNumber) / samplesNumber;
-
+    SampleParametersCalculator(Sample sample, int partsNumber) {
+        this.sample = sample;
+        this.samples = sample.divideToParts(partsNumber);
         this.baseSampleNumberCount = sample.getNumberCount();
-
-        this.samples = sample.divideToParts(samplesNumber);
     }
 
-    List<Sample> getSamples() {
-        return this.samples;
-    }
-
-    SamplingRates getSamplingRates() {
+    SampleParameters calculateSampleParameters() {
+        Solution sampleMean = this.calculateSampleMean();
         Solution mathExpectationEstimation = this.calculateMathExpectationEstimation();
-        Solution varianceEstimation = this.calculateVarianceEstimation(mathExpectationEstimation.getAnswer());
-        return new SamplingRates(this.sampleMaxNumber, this.sampleMinNumber, this.sampleHopNumber,
-                this.calculateSampleMean(), mathExpectationEstimation,
-                varianceEstimation, this.calculateQuadraticDeviationEstimation(varianceEstimation.getAnswer()));
+        Solution varianceEstimation = this.calculateVarianceEstimation(
+                mathExpectationEstimation.getAnswer());
+        Solution quadraticDeviationEstimation = this.calculateQuadraticDeviationEstimation(
+                varianceEstimation.getAnswer());
+
+        SampleParameters sampleParameters = new SampleParameters();
+        sampleParameters.setMax(this.sample.getMaxNumber());
+        sampleParameters.setMin(this.sample.getMinNumber());
+        sampleParameters.setHop(this.sample.getHopNumber());
+
+        sampleParameters.setSampleMean(sampleMean);
+        sampleParameters.setMathExpectationEstimation(mathExpectationEstimation);
+        sampleParameters.setVarianceEstimation(varianceEstimation);
+        sampleParameters.setQuadraticDeviationEstimation(quadraticDeviationEstimation);
+
+        return sampleParameters;
     }
 
     // Средняя выборки.
     private Solution calculateSampleMean() {
         StringBuilder formula = new StringBuilder("(");
-        Float answer = 0F;
+        float answer = 0F;
 
         int numberCount;
         float averageValue;
@@ -58,10 +62,10 @@ class StatisticCalculator {
     // Оценка математического ожидания.
     private Solution calculateMathExpectationEstimation() {
         StringBuilder formula = new StringBuilder("(");
-        Float answer = 0F;
+        float answer = 0F;
 
         float relativeFrequency, averageValue;
-        for (Sample sample : this.samples) {
+        for (Sample sample : samples) {
             relativeFrequency = sample.getRelativeFrequency(this.baseSampleNumberCount);
             averageValue = sample.getAverageValue();
             answer += averageValue * relativeFrequency;
@@ -79,7 +83,7 @@ class StatisticCalculator {
     // Оценка дисперсии.
     private Solution calculateVarianceEstimation(float mathExpectationEstimation) {
         StringBuilder formula = new StringBuilder();
-        Float answer = 0F;
+        float answer = 0F;
 
         int samplesNumber = this.samples.size();
         formula.append(samplesNumber).append("/").append(samplesNumber - 1).append("*(");
