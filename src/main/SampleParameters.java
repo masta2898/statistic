@@ -1,4 +1,4 @@
-package statistic;
+package main;
 
 class SampleParameters {
     private Float max;

@@ -1,14 +1,14 @@
-package statistic;
+package main;
 
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class SampleView {
-    private SimpleFloatProperty lowerBound;
-    private SimpleFloatProperty higherBound;
-    private SimpleIntegerProperty frequency;
-    private SimpleFloatProperty relativeFrequency;
-    private SimpleFloatProperty averageValue;
+    private SimpleFloatProperty lowerBound = new SimpleFloatProperty();
+    private SimpleFloatProperty higherBound = new SimpleFloatProperty();
+    private SimpleIntegerProperty frequency = new SimpleIntegerProperty();
+    private SimpleFloatProperty relativeFrequency = new SimpleFloatProperty();
+    private SimpleFloatProperty averageValue = new SimpleFloatProperty();
 
     public float getLowerBound() {
         return lowerBound.get();

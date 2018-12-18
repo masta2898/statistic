@@ -1,17 +1,17 @@
-package statistic;
+package main;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-class Sample {
+public class Sample {
     private List<Float> numbers;
 
-    Sample(List<Float> numbers) {
+    public Sample(List<Float> numbers) {
         this.numbers = numbers;
     }
 
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return this.numbers.isEmpty();
     }
 
@@ -43,7 +43,9 @@ class Sample {
         return averageValue / this.getNumberCount();
     }
 
-    List<Sample> divideToParts(int partsNumber) {
+    public List<Sample> divideToParts(int partsNumber) {
+        if (this.isEmpty()) return new LinkedList<>();
+
         Collections.sort(this.numbers);
 
         List<Sample> parts = new LinkedList<>();

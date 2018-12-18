@@ -1,4 +1,4 @@
-package statistic;
+package main;
 
 class Solution {
     private String formula;

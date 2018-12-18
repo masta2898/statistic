@@ -1,8 +1,8 @@
-package statistic;
+package main;
 
 import java.util.List;
 
-class SampleParametersCalculator {
+public class SampleParametersCalculator {
 
     private final Sample sample;
     private final List<Sample> samples;
@@ -36,7 +36,7 @@ class SampleParametersCalculator {
     }
 
     // Средняя выборки.
-    private Solution calculateSampleMean() {
+    Solution calculateSampleMean() {
         StringBuilder formula = new StringBuilder("(");
         float answer = 0F;
 
@@ -46,9 +46,7 @@ class SampleParametersCalculator {
             numberCount = sample.getNumberCount();
             averageValue = sample.getAverageValue();
             answer += numberCount * averageValue;
-            formula.append(numberCount)
-                    .append("*")
-                    .append(averageValue).append("+");
+            formula.append(numberCount).append("*").append(averageValue).append("+");
         }
 
         answer /= this.baseSampleNumberCount;
@@ -60,7 +58,7 @@ class SampleParametersCalculator {
     }
 
     // Оценка математического ожидания.
-    private Solution calculateMathExpectationEstimation() {
+    Solution calculateMathExpectationEstimation() {
         StringBuilder formula = new StringBuilder("(");
         float answer = 0F;
 
@@ -69,9 +67,7 @@ class SampleParametersCalculator {
             relativeFrequency = sample.getRelativeFrequency(this.baseSampleNumberCount);
             averageValue = sample.getAverageValue();
             answer += averageValue * relativeFrequency;
-            formula.append(averageValue)
-                    .append("*")
-                    .append(relativeFrequency).append("+");
+            formula.append(averageValue).append("*").append(relativeFrequency).append("+");
         }
 
         formula.deleteCharAt(formula.length() - 1);
@@ -81,7 +77,7 @@ class SampleParametersCalculator {
     }
 
     // Оценка дисперсии.
-    private Solution calculateVarianceEstimation(float mathExpectationEstimation) {
+    Solution calculateVarianceEstimation(float mathExpectationEstimation) {
         StringBuilder formula = new StringBuilder();
         float answer = 0F;
 
@@ -93,12 +89,8 @@ class SampleParametersCalculator {
             relativeFrequency = sample.getRelativeFrequency(this.baseSampleNumberCount);
             averageValue = sample.getAverageValue();
             answer += (float) Math.pow(averageValue - mathExpectationEstimation, 2) * relativeFrequency;
-            formula.append("(")
-                    .append(averageValue)
-                    .append("-")
-                    .append(mathExpectationEstimation)
-                    .append(")^2")
-                    .append("*").append(relativeFrequency).append("+");
+            formula.append("(").append(averageValue).append("-").append(mathExpectationEstimation)
+                    .append(")^2").append("*").append(relativeFrequency).append("+");
         }
 
         float offset = (float) samplesNumber / ((float) samplesNumber - 1);
@@ -111,7 +103,7 @@ class SampleParametersCalculator {
     }
 
     // Оценка среднеквадратического отклонения.
-    private Solution calculateQuadraticDeviationEstimation(float varianceEstimation) {
+    Solution calculateQuadraticDeviationEstimation(float varianceEstimation) {
         StringBuilder formula = new StringBuilder();
         Float answer = (float) Math.sqrt(varianceEstimation);
         formula.append("sqrt(").append(varianceEstimation).append(")");

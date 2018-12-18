@@ -1,4 +1,4 @@
-package statistic;
+package main;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -71,7 +71,7 @@ public class Controller {
 
         this.setSampleParameters(sampleParameters);
         this.buildStatTable(sampleViews);
-        this.buildBarChart(samples);
+        this.buildBarChart(samples, sample.getNumberCount());
     }
 
     private List<SampleView> getSampleViews(Sample baseSample, List<Sample> samples) {
@@ -153,7 +153,7 @@ public class Controller {
         }
     }
 
-    private void buildBarChart(List<Sample> samples) {
+    private void buildBarChart(List<Sample> samples, int baseSampleNumberCount) {
         this.dischargeAxis.setLabel("Розряд");
         this.relativeFrequencyAxis.setLabel("Відносна чатота (hi)");
 
@@ -164,14 +164,9 @@ public class Controller {
         XYChart.Series series = new XYChart.Series();
         series.setName("Значення відносної частоти у проміжку.");
 
-        int baseSampleNumberCount = 0;
-        for (Sample sample : samples) {
-            baseSampleNumberCount += sample.getNumberCount();
-        }
-
         String discharge;
         for (Sample sample : samples) {
-            discharge = "з " + sample.getMinNumber().toString() + " до " + sample.getMaxNumber().toString();
+            discharge = sample.getMinNumber().toString() + " - " + sample.getMaxNumber().toString();
             series.getData().add(new XYChart.Data(discharge, sample.getRelativeFrequency(baseSampleNumberCount)));
         }
 
