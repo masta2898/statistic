@@ -5,12 +5,22 @@ import java.util.List;
 
 public class SampleParametersCalculatorImpl implements SampleParametersCalculator {
 
-    private Sample sample;
+    private Sample baseSample;
     private List<Sample> samples;
 
     SampleParametersCalculatorImpl() {
-        this.sample = new Sample(new LinkedList<>());
-        this.samples = sample.divideToParts(0);
+        this.baseSample = new Sample(new LinkedList<>());
+        this.samples = baseSample.divideToParts(0);
+    }
+
+    @Override
+    public void setBaseSample(Sample baseSample) {
+        this.baseSample = baseSample;
+    }
+
+    @Override
+    public void setSamples(List<Sample> samples) {
+        this.samples = samples;
     }
 
     @Override
@@ -23,9 +33,9 @@ public class SampleParametersCalculatorImpl implements SampleParametersCalculato
                 varianceEstimation.getAnswer());
 
         SampleParameters sampleParameters = new SampleParameters();
-        sampleParameters.setMax(this.sample.getMaxNumber());
-        sampleParameters.setMin(this.sample.getMinNumber());
-        sampleParameters.setHop(this.sample.getHopNumber());
+        sampleParameters.setMax(this.baseSample.getMaxNumber());
+        sampleParameters.setMin(this.baseSample.getMinNumber());
+        sampleParameters.setHop(this.baseSample.getHopNumber());
 
         sampleParameters.setSampleMean(sampleMean);
         sampleParameters.setMathExpectationEstimation(mathExpectationEstimation);
@@ -35,18 +45,8 @@ public class SampleParametersCalculatorImpl implements SampleParametersCalculato
         return sampleParameters;
     }
 
-    @Override
-    public void setBaseSample(Sample baseSample) {
-        this.sample = baseSample;
-    }
-
-    @Override
-    public void setSamples(List<Sample> samples) {
-        this.samples = samples;
-    }
-
     // Средняя выборки.
-    Solution calculateSampleMean() {
+    private Solution calculateSampleMean() {
         StringBuilder formula = new StringBuilder("(");
         float answer = 0F;
 
@@ -59,16 +59,16 @@ public class SampleParametersCalculatorImpl implements SampleParametersCalculato
             formula.append(numberCount).append("*").append(averageValue).append("+");
         }
 
-        answer /= sample.getNumberCount();
+        answer /= baseSample.getNumberCount();
 
         formula.deleteCharAt(formula.length() - 1);
-        formula.append(")").append("/").append(sample.getNumberCount());
+        formula.append(")").append("/").append(baseSample.getNumberCount());
 
         return new Solution(formula.toString(), answer);
     }
 
     // Оценка математического ожидания.
-    Solution calculateMathExpectationEstimation() {
+    private Solution calculateMathExpectationEstimation() {
         StringBuilder formula = new StringBuilder("(");
         float answer = 0F;
 
@@ -87,7 +87,7 @@ public class SampleParametersCalculatorImpl implements SampleParametersCalculato
     }
 
     // Оценка дисперсии.
-    Solution calculateVarianceEstimation(float mathExpectationEstimation) {
+    private Solution calculateVarianceEstimation(float mathExpectationEstimation) {
         StringBuilder formula = new StringBuilder();
         float answer = 0F;
 
@@ -113,7 +113,7 @@ public class SampleParametersCalculatorImpl implements SampleParametersCalculato
     }
 
     // Оценка среднеквадратического отклонения.
-    Solution calculateQuadraticDeviationEstimation(float varianceEstimation) {
+    private Solution calculateQuadraticDeviationEstimation(float varianceEstimation) {
         StringBuilder formula = new StringBuilder();
         Float answer = (float) Math.sqrt(varianceEstimation);
         formula.append("sqrt(").append(varianceEstimation).append(")");
