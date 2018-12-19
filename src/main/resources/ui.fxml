@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" hgap="2" vgap="2"
-          xmlns="http://javafx.com/javafx/8.0.121" fx:controller="main.Controller">
+          xmlns="http://javafx.com/javafx/8.0.121">
     <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
         <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
             <TextField fx:id="samplesNumber" prefColumnCount="50" promptText="Кількість вибірок"

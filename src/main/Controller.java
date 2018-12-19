@@ -38,6 +38,12 @@ public class Controller {
     public TextField varianceEstimation;
     public TextField quadraticDeviationEstimation;
 
+    private SampleParametersCalculator sampleParametersCalculator;
+
+    Controller(SampleParametersCalculator sampleParametersCalculator) {
+        this.sampleParametersCalculator = sampleParametersCalculator;
+    }
+
     @FXML
     public void handleCalculateAction(ActionEvent actionEvent) {
         if (!this.samplesNumberExist()) {
@@ -66,7 +72,8 @@ public class Controller {
         List<Sample> samples = sample.divideToParts(samplesNumber);
         List<SampleView> sampleViews = this.getSampleViews(sample, samples);
 
-        SampleParametersCalculator sampleParametersCalculator = new SampleParametersCalculator(sample, samplesNumber);
+        sampleParametersCalculator.setBaseSample(sample);
+        sampleParametersCalculator.setSamples(samples);
         SampleParameters sampleParameters = sampleParametersCalculator.calculateSampleParameters();
 
         this.setSampleParameters(sampleParameters);

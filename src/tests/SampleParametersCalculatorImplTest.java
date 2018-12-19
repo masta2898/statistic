@@ -2,10 +2,10 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 
-class SampleParametersCalculatorTest {
+class SampleParametersCalculatorImplTest {
     @Test
     void calculateSampleMean() {
-//        SampleParametersCalculator spc = new SampleParametersCalculator();
+//        SampleParametersCalculatorImpl spc = new SampleParametersCalculatorImpl();
     }
 
     @Test
