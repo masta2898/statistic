@@ -6,5 +6,11 @@ public interface SampleParametersCalculator {
     void setBaseSample(Sample baseSample);
     void setSamples(List<Sample> samples);
 
-    SampleParameters calculateSampleParameters();
+    Solution calculateSampleMean();
+
+    Solution calculateMathExpectationEstimation();
+
+    Solution calculateVarianceEstimation(float mathExpectationEstimation);
+
+    Solution calculateQuadraticDeviationEstimation(float varianceEstimation);
 }

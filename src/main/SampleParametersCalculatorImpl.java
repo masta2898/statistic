@@ -23,30 +23,9 @@ public class SampleParametersCalculatorImpl implements SampleParametersCalculato
         this.samples = samples;
     }
 
-    @Override
-    public SampleParameters calculateSampleParameters() {
-        Solution sampleMean = this.calculateSampleMean();
-        Solution mathExpectationEstimation = this.calculateMathExpectationEstimation();
-        Solution varianceEstimation = this.calculateVarianceEstimation(
-                mathExpectationEstimation.getAnswer());
-        Solution quadraticDeviationEstimation = this.calculateQuadraticDeviationEstimation(
-                varianceEstimation.getAnswer());
-
-        SampleParameters sampleParameters = new SampleParameters();
-        sampleParameters.setMax(this.baseSample.getMaxNumber());
-        sampleParameters.setMin(this.baseSample.getMinNumber());
-        sampleParameters.setHop(this.baseSample.getHopNumber());
-
-        sampleParameters.setSampleMean(sampleMean);
-        sampleParameters.setMathExpectationEstimation(mathExpectationEstimation);
-        sampleParameters.setVarianceEstimation(varianceEstimation);
-        sampleParameters.setQuadraticDeviationEstimation(quadraticDeviationEstimation);
-
-        return sampleParameters;
-    }
-
     // Средняя выборки.
-    private Solution calculateSampleMean() {
+    @Override
+    public Solution calculateSampleMean() {
         StringBuilder formula = new StringBuilder("(");
         float answer = 0F;
 
@@ -68,7 +47,8 @@ public class SampleParametersCalculatorImpl implements SampleParametersCalculato
     }
 
     // Оценка математического ожидания.
-    private Solution calculateMathExpectationEstimation() {
+    @Override
+    public Solution calculateMathExpectationEstimation() {
         StringBuilder formula = new StringBuilder("(");
         float answer = 0F;
 
@@ -87,7 +67,8 @@ public class SampleParametersCalculatorImpl implements SampleParametersCalculato
     }
 
     // Оценка дисперсии.
-    private Solution calculateVarianceEstimation(float mathExpectationEstimation) {
+    @Override
+    public Solution calculateVarianceEstimation(float mathExpectationEstimation) {
         StringBuilder formula = new StringBuilder();
         float answer = 0F;
 
@@ -113,7 +94,8 @@ public class SampleParametersCalculatorImpl implements SampleParametersCalculato
     }
 
     // Оценка среднеквадратического отклонения.
-    private Solution calculateQuadraticDeviationEstimation(float varianceEstimation) {
+    @Override
+    public Solution calculateQuadraticDeviationEstimation(float varianceEstimation) {
         StringBuilder formula = new StringBuilder();
         Float answer = (float) Math.sqrt(varianceEstimation);
         formula.append("sqrt(").append(varianceEstimation).append(")");

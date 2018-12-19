@@ -46,39 +46,61 @@ public class Controller {
 
     @FXML
     public void handleCalculateAction(ActionEvent actionEvent) {
-        if (!this.samplesNumberExist()) {
+        if (!samplesNumberExist()) {
             showError("Кількість вибірок повинна бути цілим числом.");
             return;
         }
 
-        if (!this.sampleNumbersExist()) {
+        if (!sampleNumbersExist()) {
             showError("Числа повинні бути цілими або з плаваючою комою, розділені пробілом.");
             return;
         }
 
-        int samplesNumber = this.getSamplesNumber();
-        Sample sample = new Sample(this.getSampleNumbers());
+        int samplesNumber = getSamplesNumber();
+        Sample baseSample = new Sample(this.getSampleNumbers());
 
         if (samplesNumber <= 0) {
             showError("Кількість вибірок повинна бути більше 1.");
             return;
         }
 
-        if (sample.isEmpty()) {
+        if (baseSample.isEmpty()) {
             showError("Кількість чисел повинна бути більше 1.");
             return;
         }
 
-        List<Sample> samples = sample.divideToParts(samplesNumber);
-        List<SampleView> sampleViews = this.getSampleViews(sample, samples);
+        List<Sample> samples = baseSample.divideToParts(samplesNumber);
+        List<SampleView> sampleViews = getSampleViews(baseSample, samples);
+        SampleParameters sampleParameters = calculateSampleParameters(baseSample, samples);
 
-        sampleParametersCalculator.setBaseSample(sample);
+        setSampleParameters(sampleParameters);
+        buildStatTable(sampleViews);
+        buildBarChart(samples, baseSample.getNumberCount());
+    }
+
+    private SampleParameters calculateSampleParameters(Sample baseSample, List<Sample> samples) {
+        sampleParametersCalculator.setBaseSample(baseSample);
         sampleParametersCalculator.setSamples(samples);
-        SampleParameters sampleParameters = sampleParametersCalculator.calculateSampleParameters();
 
-        this.setSampleParameters(sampleParameters);
-        this.buildStatTable(sampleViews);
-        this.buildBarChart(samples, sample.getNumberCount());
+        Solution sampleMean = sampleParametersCalculator.calculateSampleMean();
+        Solution mathExpectationEstimation = sampleParametersCalculator.calculateMathExpectationEstimation();
+        Solution varianceEstimation = sampleParametersCalculator.calculateVarianceEstimation(
+                mathExpectationEstimation.getAnswer());
+        Solution quadraticDeviationEstimation = sampleParametersCalculator.calculateQuadraticDeviationEstimation(
+                varianceEstimation.getAnswer());
+
+        SampleParameters sampleParameters = new SampleParameters();
+
+        sampleParameters.setMax(baseSample.getMaxNumber());
+        sampleParameters.setMin(baseSample.getMinNumber());
+        sampleParameters.setHop(baseSample.getHopNumber());
+
+        sampleParameters.setSampleMean(sampleMean);
+        sampleParameters.setMathExpectationEstimation(mathExpectationEstimation);
+        sampleParameters.setVarianceEstimation(varianceEstimation);
+        sampleParameters.setQuadraticDeviationEstimation(quadraticDeviationEstimation);
+
+        return sampleParameters;
     }
 
     private List<SampleView> getSampleViews(Sample baseSample, List<Sample> samples) {
@@ -97,7 +119,7 @@ public class Controller {
 
     private boolean sampleNumbersExist() {
         try {
-            Integer.parseInt(this.samplesNumber.getText());
+            Integer.parseInt(samplesNumber.getText());
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -117,12 +139,12 @@ public class Controller {
     }
 
     private int getSamplesNumber() {
-        return Integer.parseInt(this.samplesNumber.getText());
+        return Integer.parseInt(samplesNumber.getText());
     }
 
     private List<Float> getSampleNumbers() {
         List<Float> sampleNumbers = new LinkedList<>();
-        String[] data = this.numbers.getText().split(" ");
+        String[] data = numbers.getText().split(" ");
         for (String number : data) {
             sampleNumbers.add(Float.parseFloat(number));
         }
@@ -130,43 +152,43 @@ public class Controller {
     }
 
     private void setSampleParameters(SampleParameters sampleParameters) {
-        this.xmax.setText(String.valueOf(sampleParameters.getMax()));
-        this.xmin.setText(String.valueOf(sampleParameters.getMin()));
-        this.hop.setText(String.valueOf(sampleParameters.getHop()));
+        xmax.setText(String.valueOf(sampleParameters.getMax()));
+        xmin.setText(String.valueOf(sampleParameters.getMin()));
+        hop.setText(String.valueOf(sampleParameters.getHop()));
 
-        this.sampleMean.setText(sampleParameters.getSampleMeanCalculation());
-        this.mathExpectationEstimation.setText(sampleParameters.getMathExpectationEstimationCalculation());
-        this.varianceEstimation.setText(sampleParameters.getVarianceEstimationCalculation());
-        this.quadraticDeviationEstimation.setText(sampleParameters.getQuadraticDeviationEstimationCalculation());
+        sampleMean.setText(sampleParameters.getSampleMeanCalculation());
+        mathExpectationEstimation.setText(sampleParameters.getMathExpectationEstimationCalculation());
+        varianceEstimation.setText(sampleParameters.getVarianceEstimationCalculation());
+        quadraticDeviationEstimation.setText(sampleParameters.getQuadraticDeviationEstimationCalculation());
     }
 
     private void buildStatTable(List<SampleView> sampleViews) {
         try {
-            this.dischargeColumn.getColumns().clear();
-            this.statTable.getColumns().clear();
+            dischargeColumn.getColumns().clear();
+            statTable.getColumns().clear();
 
-            this.lowColumn.setCellValueFactory(new PropertyValueFactory<>("lowerBound"));
-            this.highColumn.setCellValueFactory(new PropertyValueFactory<>("higherBound"));
-            this.miColumn.setCellValueFactory(new PropertyValueFactory<>("frequency"));
-            this.hiColumn.setCellValueFactory(new PropertyValueFactory<>("relativeFrequency"));
-            this.xiColumn.setCellValueFactory(new PropertyValueFactory<>("averageValue"));
+            lowColumn.setCellValueFactory(new PropertyValueFactory<>("lowerBound"));
+            highColumn.setCellValueFactory(new PropertyValueFactory<>("higherBound"));
+            miColumn.setCellValueFactory(new PropertyValueFactory<>("frequency"));
+            hiColumn.setCellValueFactory(new PropertyValueFactory<>("relativeFrequency"));
+            xiColumn.setCellValueFactory(new PropertyValueFactory<>("averageValue"));
 
-            this.statTable.setItems(FXCollections.observableArrayList(sampleViews));
+            statTable.setItems(FXCollections.observableArrayList(sampleViews));
 
-            this.dischargeColumn.getColumns().addAll(this.lowColumn, this.highColumn);
-            this.statTable.getColumns().addAll(this.dischargeColumn, this.miColumn, this.hiColumn, this.xiColumn);
+            dischargeColumn.getColumns().addAll(lowColumn, highColumn);
+            statTable.getColumns().addAll(dischargeColumn, miColumn, hiColumn, xiColumn);
         } catch (NullPointerException | NoSuchElementException e) {
-            this.showWarning("Одне із значень відсутнє, тому таблиця не буде відтворена.");
+            showWarning("Одне із значень відсутнє, тому таблиця не буде відтворена.");
         }
     }
 
     private void buildBarChart(List<Sample> samples, int baseSampleNumberCount) {
-        this.dischargeAxis.setLabel("Розряд");
-        this.relativeFrequencyAxis.setLabel("Відносна чатота (hi)");
+        dischargeAxis.setLabel("Розряд");
+        relativeFrequencyAxis.setLabel("Відносна чатота (hi)");
 
         // Выключил анимацию, чтобы тратило меньше ресурсов.
-        this.dischargeAxis.setAnimated(false);
-        this.relativeFrequencyAxis.setAnimated(false);
+        dischargeAxis.setAnimated(false);
+        relativeFrequencyAxis.setAnimated(false);
 
         XYChart.Series series = new XYChart.Series();
         series.setName("Значення відносної частоти у проміжку.");
@@ -177,8 +199,8 @@ public class Controller {
             series.getData().add(new XYChart.Data(discharge, sample.getRelativeFrequency(baseSampleNumberCount)));
         }
 
-        this.barChart.getData().clear();
-        this.barChart.getData().addAll(series);
+        barChart.getData().clear();
+        barChart.getData().addAll(series);
     }
 
     private void showWarning(String text) {
