@@ -54,7 +54,7 @@ public class SampleParametersCalculatorImpl implements SampleParametersCalculato
 
         float relativeFrequency, averageValue;
         for (Sample sample : samples) {
-            relativeFrequency = sample.getRelativeFrequency(sample.getNumberCount());
+            relativeFrequency = sample.getRelativeFrequency(baseSample.getNumberCount());
             averageValue = sample.getAverageValue();
             answer += averageValue * relativeFrequency;
             formula.append(averageValue).append("*").append(relativeFrequency).append("+");
@@ -77,7 +77,7 @@ public class SampleParametersCalculatorImpl implements SampleParametersCalculato
 
         float averageValue, relativeFrequency;
         for (Sample sample : samples) {
-            relativeFrequency = sample.getRelativeFrequency(sample.getNumberCount());
+            relativeFrequency = sample.getRelativeFrequency(baseSample.getNumberCount());
             averageValue = sample.getAverageValue();
             answer += (float) Math.pow(averageValue - mathExpectationEstimation, 2) * relativeFrequency;
             formula.append("(").append(averageValue).append("-").append(mathExpectationEstimation)
